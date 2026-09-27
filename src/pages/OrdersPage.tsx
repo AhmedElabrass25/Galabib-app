@@ -131,8 +131,6 @@ export default function OrdersPage() {
           onPageChange={pagination.setPage}
         />
       )}
-
-      {/* Delete Confirm */}
       <ConfirmDialog
         isOpen={!!deletingOrder}
         onClose={() => setDeletingOrder(null)}

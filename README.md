@@ -1,5 +1,15 @@
 # React + TypeScript + Vite
 
+## Environment variables
+
+Copy `.env.example` to `.env` and fill in the Supabase project URL and anon key for local development. Local `.env` files are ignored by Git.
+
+For GitHub Actions builds, add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` under **Settings > Secrets and variables > Actions > Secrets**, then expose them to the build step as environment variables. This repository does not currently include a deployment workflow.
+
+These `VITE_` values are included in the client-side bundle and are visible to anyone using the app. The Supabase anon key is intended to be public; never use a service-role key here. Protect data with Supabase Row Level Security policies.
+
+If a sensitive key was committed previously, removing `.env` from the current commit does not remove it from Git history; rotate any truly secret credentials.
+
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
 Currently, two official plugins are available:

@@ -1,0 +1,72 @@
+import type { GarmentTypeConfig } from "../garment-types";
+
+export const BALADY_CONFIG: GarmentTypeConfig = {
+  id: "balady",
+  label: "الجلابية البلدي",
+  measurements: [
+    {
+      name: "length",
+      label: "الطول",
+      unit: "inch",
+      required: true,
+      min: 20,
+      max: 80,
+    },
+    {
+      name: "sleeve",
+      label: "الكم",
+      unit: "inch",
+      required: true,
+      min: 10,
+      max: 50,
+    },
+    {
+      name: "width",
+      label: "الوسع",
+      unit: "cm_or_inch",
+      required: true,
+      min: 10,
+      max: 100,
+    },
+    {
+      name: "shoulder",
+      label: "الأبه  ",
+      unit: "cm_or_inch",
+      required: true,
+      min: 10,
+      max: 80,
+    },
+    {
+      name: "bottom_width",
+      label: "وسع الديل / الأتك",
+      unit: "cm",
+      required: true,
+      min: 20,
+      max: 150,
+    },
+    {
+      name: "sleeve_width",
+      label: "وسع الكم",
+      unit: "cm",
+      required: true,
+      min: 10,
+      max: 60,
+    },
+    {
+      name: "pocket",
+      label: "الخزنة",
+      unit: "cm_or_inch",
+      required: false,
+      min: 5,
+      max: 40,
+    },
+    {
+      name: "body",
+      label: "البدن",
+      unit: "cm_or_inch",
+      required: false,
+      min: 20,
+      max: 150,
+    },
+  ],
+};

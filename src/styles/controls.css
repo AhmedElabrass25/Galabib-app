@@ -1,0 +1,36 @@
+input,
+select,
+textarea {
+  font: inherit;
+  font-size: 15px;
+  border-radius: 8px;
+}
+
+button {
+  font: inherit;
+  font-size: 15px;
+  border-radius: 8px;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+*:focus-visible {
+  outline: 3px solid var(--color-secondary);
+  outline-offset: 2px;
+}

@@ -1,0 +1,82 @@
+import type { GarmentTypeConfig } from "../garment-types";
+import { AFRANGY_OPTIONS } from "./afrangy-options";
+
+export const AFRANGY_CONFIG: GarmentTypeConfig = {
+  id: "afrangy",
+  label: "الجلابية الأفرنجي العادي",
+  measurements: [
+    {
+      name: "length",
+      label: "الطول",
+      unit: "inch",
+      required: true,
+      min: 20,
+      max: 80,
+    },
+    {
+      name: "back",
+      label: "الخلف",
+      unit: "inch",
+      required: true,
+      min: 10,
+      max: 50,
+    },
+    {
+      name: "sleeve",
+      label: "الكم",
+      unit: "inch",
+      required: true,
+      min: 10,
+      max: 50,
+    },
+    {
+      name: "width",
+      label: "الوسع",
+      unit: "cm_or_inch",
+      required: true,
+      min: 10,
+      max: 100,
+    },
+    {
+      name: "neck",
+      label: "الرقبة",
+      unit: "inch",
+      required: true,
+      min: 10,
+      max: 30,
+    },
+    {
+      name: "body",
+      label: "البدن",
+      unit: "inch",
+      required: true,
+      min: 20,
+      max: 80,
+    },
+    {
+      name: "zero",
+      label: "صفرة",
+      unit: "inch",
+      required: true,
+      min: 5,
+      max: 30,
+    },
+    {
+      name: "bottom_width",
+      label: "الديل / الأتك",
+      unit: "inch",
+      required: true,
+      min: 10,
+      max: 50,
+    },
+    {
+      name: "pocket",
+      label: "الخزنة",
+      unit: "cm_or_inch",
+      required: false,
+      min: 5,
+      max: 40,
+    },
+  ],
+  options: AFRANGY_OPTIONS,
+};

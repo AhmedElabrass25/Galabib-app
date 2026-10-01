@@ -1,7 +1,8 @@
 import { NavLink } from "react-router-dom";
-import { Scissors, X } from "lucide-react";
+import { Scissors, X, LogOut } from "lucide-react";
 import { NAV_ITEMS } from "@/lib/constants";
 import { getSidebarIcon } from "./sidebar-icons";
+import { supabase } from "@/lib/supabase";
 interface SidebarProps {
   isOpen: boolean;
   onClose?: () => void;
@@ -76,9 +77,15 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           </nav>
         </div>
 
-        {/* Footer info */}
-        <div className="p-5 border-t border-white/10 text-center text-xs text-slate-400 font-medium">
-          نظام الخياطة العربي v1.0
+        {/* Footer: Logout */}
+        <div className="p-4 border-t border-white/10">
+          <button
+            onClick={() => supabase.auth.signOut()}
+            className="w-full flex items-center gap-3 px-3.5 py-3 rounded-lg text-slate-300 hover:bg-red-500/15 hover:text-red-300 transition-colors font-semibold text-[15px]"
+          >
+            <LogOut className="w-5 h-5 shrink-0" />
+            <span>تسجيل الخروج</span>
+          </button>
         </div>
       </aside>
     </>

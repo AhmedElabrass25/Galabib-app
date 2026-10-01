@@ -1,20 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
-import { localStore } from "@/lib/store";
 
 export function useDeleteCustomer() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => {
-      try {
-        const { error } = await supabase
-          .from("customers")
-          .delete()
-          .eq("id", id);
-        if (error) localStore.deleteCustomer(id);
-      } catch {
-        localStore.deleteCustomer(id);
-      }
+      const { error } = await supabase.from("customers").delete().eq("id", id);
+      if (error) throw new Error(error.message);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["customers"] });

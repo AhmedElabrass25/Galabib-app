@@ -1,13 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
-import { localStore } from "@/lib/store";
-import type {
-  Order,
-  OrderStatus,
-  GarmentType,
-  Measurement,
-  OrderOption,
-} from "@/types";
+import type { Order, OrderStatus, GarmentType, Measurement, OrderOption } from "@/types";
 
 interface OrderFilters {
   search?: string;
@@ -20,30 +13,24 @@ export function useOrders(filters?: OrderFilters) {
   return useQuery({
     queryKey: ["orders", filters],
     queryFn: async () => {
-      try {
-        let query = supabase
-          .from("orders")
-          .select("*, customer:customers(*)")
-          .order("created_at", { ascending: false });
-        if (filters?.customer_id)
-          query = query.eq("customer_id", filters.customer_id);
-        if (filters?.status) query = query.eq("status", filters.status);
-        if (filters?.garment_type)
-          query = query.eq("garment_type", filters.garment_type);
-        const { data, error } = await query;
-        if (error || !data) return localStore.getOrders(filters);
-        const search = filters?.search?.trim().toLowerCase();
-        return search
-          ? (data as Order[]).filter(
-              (order) =>
-                order.customer?.name.toLowerCase().includes(search) ||
-                order.customer?.phone.includes(search) ||
-                order.notes?.toLowerCase().includes(search),
-            )
-          : (data as Order[]);
-      } catch {
-        return localStore.getOrders(filters);
-      }
+      let query = supabase
+        .from("orders")
+        .select("*, customer:customers(*)")
+        .order("created_at", { ascending: false });
+      if (filters?.customer_id) query = query.eq("customer_id", filters.customer_id);
+      if (filters?.status) query = query.eq("status", filters.status);
+      if (filters?.garment_type) query = query.eq("garment_type", filters.garment_type);
+      const { data, error } = await query;
+      if (error) throw new Error(error.message);
+      const search = filters?.search?.trim().toLowerCase();
+      return search
+        ? (data as Order[]).filter(
+            (order) =>
+              order.customer?.name.toLowerCase().includes(search) ||
+              order.customer?.phone.includes(search) ||
+              order.notes?.toLowerCase().includes(search),
+          )
+        : (data as Order[]);
     },
   });
 }
@@ -53,21 +40,13 @@ export function useCustomerOrders(customerId?: string) {
     queryKey: ["customer-orders", customerId],
     enabled: !!customerId,
     queryFn: async () => {
-      try {
-        const { data, error } = await supabase
-          .from("orders")
-          .select("*, customer:customers(*), measurements(*), order_options(*)")
-          .eq("customer_id", customerId!)
-          .order("created_at", { ascending: false });
-        if (error || !data)
-          return localStore.getOrders({ customer_id: customerId });
-        return data as (Order & {
-          measurements: Measurement[];
-          order_options: OrderOption[];
-        })[];
-      } catch {
-        return localStore.getOrders({ customer_id: customerId });
-      }
+      const { data, error } = await supabase
+        .from("orders")
+        .select("*, customer:customers(*), measurements(*), order_options(*)")
+        .eq("customer_id", customerId!)
+        .order("created_at", { ascending: false });
+      if (error) throw new Error(error.message);
+      return data as (Order & { measurements: Measurement[]; order_options: OrderOption[] })[];
     },
   });
 }
@@ -77,20 +56,13 @@ export function useOrder(id?: string) {
     queryKey: ["order", id],
     enabled: !!id,
     queryFn: async () => {
-      try {
-        const { data, error } = await supabase
-          .from("orders")
-          .select("*, customer:customers(*), measurements(*), order_options(*)")
-          .eq("id", id!)
-          .single();
-        if (error || !data) return localStore.getOrderById(id);
-        return data as Order & {
-          measurements: Measurement[];
-          order_options: OrderOption[];
-        };
-      } catch {
-        return localStore.getOrderById(id);
-      }
+      const { data, error } = await supabase
+        .from("orders")
+        .select("*, customer:customers(*), measurements(*), order_options(*)")
+        .eq("id", id!)
+        .single();
+      if (error) throw new Error(error.message);
+      return data as Order & { measurements: Measurement[]; order_options: OrderOption[] };
     },
   });
 }

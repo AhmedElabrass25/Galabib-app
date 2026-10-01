@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Scissors, Lock, Mail, AlertCircle, Loader2 } from "lucide-react";
+import { Scissors, Lock, Mail, AlertCircle, Loader2, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 
@@ -21,6 +21,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -126,18 +127,30 @@ export default function LoginPage() {
             <div className="relative">
               <input
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 dir="ltr"
                 disabled={isSubmitting}
                 placeholder="••••••••"
                 {...register("password")}
-                className={`w-full rounded-xl border bg-slate-50/80 px-4 py-3 pl-11 text-base font-semibold text-slate-900 outline-none transition-all placeholder:text-slate-400 ${
+                className={`w-full rounded-xl border bg-slate-50/80 px-4 py-3 pl-11 pr-11 text-base font-semibold text-slate-900 outline-none transition-all placeholder:text-slate-400 ${
                   errors.password
                     ? "border-rose-500 bg-rose-50/30"
                     : "border-slate-300 hover:border-slate-400 focus:bg-white"
                 }`}
               />
               <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 pointer-events-none" />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none cursor-pointer"
+                title={showPassword ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
+              </button>
             </div>
             {errors.password && (
               <p

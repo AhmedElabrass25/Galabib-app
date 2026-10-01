@@ -43,7 +43,7 @@ export default function MeasurementFieldCard({
       ? getConvertedValue(item.value, item.unit)
       : undefined;
   const inputClass =
-    "w-full min-h-11 rounded-lg border border-slate-300 bg-white px-2 py-2 text-center text-base font-bold text-slate-900 shadow-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 num-tabular";
+    "w-full min-h-11 rounded-lg border border-slate-300 bg-white px-2 py-2 text-center text-base font-bold text-slate-900 shadow-sm outline-none num-tabular";
 
   return (
     <article className="space-y-2 rounded-xl border border-slate-200 bg-slate-50/80 p-4 transition-colors hover:border-slate-300">

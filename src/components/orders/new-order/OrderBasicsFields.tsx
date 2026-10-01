@@ -37,7 +37,7 @@ export default function OrderBasicsFields({
             onChange={(event) =>
               onQuantityChange(Math.max(1, parseInt(event.target.value) || 1))
             }
-            className="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-center text-base font-bold outline-hidden focus:border-primary"
+            className="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-center text-base font-bold outline-hidden"
           />
           {errors.quantity && (
             <p role="alert" className="text-xs font-semibold text-rose-700">
@@ -55,7 +55,7 @@ export default function OrderBasicsFields({
             onChange={(event) =>
               onSadaryChange(Math.max(0, parseInt(event.target.value) || 0))
             }
-            className="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-center text-base font-bold outline-hidden focus:border-primary"
+            className="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-center text-base font-bold outline-hidden"
           />
           {errors.sadaryCount && (
             <p role="alert" className="text-xs font-semibold text-rose-700">
@@ -91,7 +91,7 @@ export default function OrderBasicsFields({
           placeholder="أي تفاصيل خاصة بالقماش أو التطريز..."
           value={notes}
           onChange={(event) => onNotesChange(event.target.value)}
-          className="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-sm font-medium outline-hidden focus:border-primary"
+          className="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-sm font-medium outline-hidden"
         />
         {errors.notes && (
           <p role="alert" className="text-xs font-semibold text-rose-700">

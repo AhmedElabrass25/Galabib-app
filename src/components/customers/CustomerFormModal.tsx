@@ -81,7 +81,7 @@ export default function CustomerFormModal({
               type="text"
               placeholder="أدخل اسم العميل..."
               {...register('name')}
-              className={`w-full bg-gray-50 border rounded-xl px-4 text-lg font-semibold text-text-primary outline-hidden focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all min-h-[60px] ${
+              className={`w-full bg-gray-50 border rounded-xl px-4 text-lg font-semibold text-text-primary outline-hidden focus:bg-white transition-all min-h-[60px] ${
                 errors.name ? 'border-red-500 bg-red-50/20' : 'border-gray-300'
               }`}
             />
@@ -102,7 +102,7 @@ export default function CustomerFormModal({
               dir="ltr"
               placeholder="01000000000"
               {...register('phone')}
-              className={`w-full bg-gray-50 border rounded-xl px-4 text-lg font-bold font-mono text-text-primary text-right outline-hidden focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all min-h-[60px] ${
+              className={`w-full bg-gray-50 border rounded-xl px-4 text-lg font-bold font-mono text-text-primary text-right outline-hidden focus:bg-white transition-all min-h-[60px] ${
                 errors.phone ? 'border-red-500 bg-red-50/20' : 'border-gray-300'
               }`}
             />
@@ -121,7 +121,7 @@ export default function CustomerFormModal({
               rows={3}
               placeholder="أي ملاحظات خاصة بالعميل..."
               {...register('notes')}
-              className="w-full bg-gray-50 border border-gray-300 rounded-xl p-4 text-lg font-medium text-text-primary outline-hidden focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all resize-none min-h-[100px]"
+              className="w-full bg-gray-50 border border-gray-300 rounded-xl p-4 text-lg font-medium text-text-primary outline-hidden focus:bg-white transition-all resize-none min-h-[100px]"
             />
             {errors.notes && (
               <p className="text-sm text-red-500 font-bold">{errors.notes.message}</p>

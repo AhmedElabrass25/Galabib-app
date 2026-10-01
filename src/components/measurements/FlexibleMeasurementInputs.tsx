@@ -32,7 +32,7 @@ export default function FlexibleMeasurementInputs({
         aria-invalid={!!error}
         aria-describedby={error ? `measurement-error-${field.name}` : undefined}
         onChange={(event) => onChange(field.name, unit, event.target.value)}
-        className="w-full min-h-11 rounded-lg border border-slate-300 bg-white px-2 py-2 text-center text-base font-bold text-slate-900 shadow-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 num-tabular"
+        className="w-full min-h-11 rounded-lg border border-slate-300 bg-white px-2 py-2 text-center text-base font-bold text-slate-900 shadow-sm outline-none num-tabular"
       />
     </label>
   );

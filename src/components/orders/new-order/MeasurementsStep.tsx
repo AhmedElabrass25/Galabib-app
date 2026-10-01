@@ -57,7 +57,7 @@ export default function MeasurementsStep({
           <div className="flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50 p-2">
             <Copy className="size-4 shrink-0 text-primary" />
             <Select onValueChange={onCopy}>
-              <SelectTrigger className="min-h-9 w-full border-0 bg-transparent px-1 py-1 text-xs text-primary shadow-none hover:border-transparent focus-visible:ring-0">
+              <SelectTrigger className="min-h-9 w-full border-0 bg-transparent px-1 py-1 text-xs text-primary shadow-none hover:border-transparent">
                 <SelectValue
                   placeholder={`نسخ المقاسات من طلب سابق (${GARMENT_TYPE_LABELS[garmentType]})`}
                 />

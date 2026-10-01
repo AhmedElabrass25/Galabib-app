@@ -108,7 +108,7 @@ export default function BackupRestorePanel() {
               setError("");
             }}
             aria-invalid={!!error}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-base outline-none focus:border-primary"
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-base outline-none"
           />
           {error && (
             <span role="alert" className="block text-xs text-rose-700">

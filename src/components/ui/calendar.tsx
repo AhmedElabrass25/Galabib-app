@@ -23,16 +23,16 @@ export function Calendar({
         caption_label: "text-sm font-bold text-slate-800",
         nav: "absolute inset-x-1 top-1 flex items-center justify-between",
         button_previous:
-          "inline-flex size-8 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
+          "inline-flex size-8 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 focus-visible:outline-none",
         button_next:
-          "inline-flex size-8 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
+          "inline-flex size-8 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 focus-visible:outline-none",
         month_grid: "w-full border-collapse",
         weekdays: "flex",
         weekday: "w-9 rounded-md text-[0.8rem] font-medium text-slate-500",
         week: "mt-1 flex w-full",
         day: "relative p-0 text-center text-sm focus-within:relative focus-within:z-20",
         day_button:
-          "inline-flex size-9 items-center justify-center rounded-md font-normal text-slate-700 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
+          "inline-flex size-9 items-center justify-center rounded-md font-normal text-slate-700 hover:bg-slate-100 focus-visible:outline-none",
         today:
           "[&>button]:bg-slate-100 [&>button]:font-bold [&>button]:text-slate-900",
         selected:

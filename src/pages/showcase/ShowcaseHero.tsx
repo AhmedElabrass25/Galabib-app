@@ -104,7 +104,7 @@ export default function ShowcaseHero({
               onChange={(event) => onName(event.target.value)}
               placeholder="اسم صاحب المكان"
               aria-label="اسم صاحب المكان"
-              className="w-full border-b border-white/40 bg-transparent py-1 text-lg font-bold text-white outline-none placeholder:text-white/65 focus:border-emerald-300"
+              className="w-full border-b border-white/40 bg-transparent py-1 text-lg font-bold text-white outline-none placeholder:text-white/65"
             />
             <textarea
               value={data.ownerBio}
@@ -112,7 +112,7 @@ export default function ShowcaseHero({
               placeholder="نبذة قصيرة عن صاحب المكان"
               aria-label="نبذة عن صاحب المكان"
               rows={2}
-              className="w-full resize-none border-b border-white/30 bg-transparent py-1 text-sm leading-6 text-white/85 outline-none placeholder:text-white/60 focus:border-emerald-300"
+              className="w-full resize-none border-b border-white/30 bg-transparent py-1 text-sm leading-6 text-white/85 outline-none placeholder:text-white/60"
             />
           </div>
         </div>

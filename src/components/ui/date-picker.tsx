@@ -37,9 +37,9 @@ export function DatePicker({
           aria-expanded={open}
           aria-invalid={!!error}
           className={cn(
-            "flex min-h-11 w-full items-center justify-between gap-3 rounded-lg border border-slate-300 bg-gray-50 px-4 py-2.5 text-right text-sm font-bold text-text-primary shadow-sm transition-colors hover:border-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
+            "flex min-h-11 w-full items-center justify-between gap-3 rounded-lg border border-slate-300 bg-gray-50 px-4 py-2.5 text-right text-sm font-bold text-text-primary shadow-sm transition-colors hover:border-slate-400 focus-visible:outline-none",
             !selectedDate && "text-slate-500",
-            error && "border-rose-500 focus-visible:ring-rose-200",
+            error && "border-rose-500",
           )}
         >
           <span>

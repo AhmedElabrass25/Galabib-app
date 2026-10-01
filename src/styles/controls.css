@@ -28,9 +28,9 @@ input[type="number"]::-webkit-outer-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 *:focus-visible {
-  outline: 3px solid var(--color-secondary);
-  outline-offset: 2px;
+  outline: none;
 }

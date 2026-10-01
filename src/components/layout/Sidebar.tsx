@@ -2,12 +2,10 @@ import { NavLink } from "react-router-dom";
 import { Scissors, X } from "lucide-react";
 import { NAV_ITEMS } from "@/lib/constants";
 import { getSidebarIcon } from "./sidebar-icons";
-
 interface SidebarProps {
   isOpen: boolean;
   onClose?: () => void;
 }
-
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   return (
     <>

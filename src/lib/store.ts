@@ -1,18 +1,24 @@
 import type { Customer, Order, Measurement, OrderOption } from '@/types';
-import { INITIAL_MOCK_CUSTOMERS, INITIAL_MOCK_ORDERS } from './mock-data';
 
 const STORAGE_KEYS = {
-  CUSTOMERS: 'jalabib_customers_v2',
-  ORDERS: 'jalabib_orders_v2',
+  CUSTOMERS: 'jalabib_customers_v3',
+  ORDERS: 'jalabib_orders_v3',
 };
 
-// Initialize localStorage with authentic Egyptian dataset
+// Remove any old mock data from previous versions
+const OLD_KEYS = [
+  'jalabib_customers_v1', 'jalabib_orders_v1',
+  'jalabib_customers_v2', 'jalabib_orders_v2',
+];
+OLD_KEYS.forEach((k) => localStorage.removeItem(k));
+
+// Initialize fresh empty store
 function initializeStorage() {
   if (!localStorage.getItem(STORAGE_KEYS.CUSTOMERS)) {
-    localStorage.setItem(STORAGE_KEYS.CUSTOMERS, JSON.stringify(INITIAL_MOCK_CUSTOMERS));
+    localStorage.setItem(STORAGE_KEYS.CUSTOMERS, JSON.stringify([]));
   }
   if (!localStorage.getItem(STORAGE_KEYS.ORDERS)) {
-    localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(INITIAL_MOCK_ORDERS));
+    localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify([]));
   }
 }
 
@@ -173,6 +179,11 @@ export const localStore = {
     let orders = localStore.getRawOrders();
     orders = orders.filter((o) => o.id !== id);
     localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(orders));
+  },
+
+  clearAll: () => {
+    localStorage.setItem(STORAGE_KEYS.CUSTOMERS, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify([]));
   },
 
   restoreAll: (data: { customers: Customer[]; orders: Order[]; measurements: Measurement[]; order_options: OrderOption[] }) => {

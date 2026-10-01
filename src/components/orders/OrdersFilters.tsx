@@ -33,9 +33,9 @@ export default function OrdersFilters({
           placeholder="ابحث باسم العميل أو رقم الهاتف..."
           value={search}
           onChange={(event) => onSearch(event.target.value)}
-          className="w-full rounded-xl border border-gray-300 bg-gray-50 py-2 pe-10 ps-4 text-sm font-semibold text-text-primary outline-hidden transition-all focus:border-primary focus:bg-white"
+          className="w-full rounded-xl border border-gray-300 bg-gray-50 py-2 ps-4 pe-10 text-sm font-semibold text-text-primary outline-hidden transition-all"
         />
-        <Search className="absolute right-3.5 top-3 size-4 text-text-muted" />
+        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-text-muted" />
       </div>
       <div className="flex w-full flex-wrap items-center gap-3 md:w-auto">
         <span className="flex shrink-0 items-center gap-1.5 text-xs font-bold text-text-secondary">

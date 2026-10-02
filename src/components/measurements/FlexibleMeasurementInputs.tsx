@@ -3,9 +3,9 @@ import type { MeasurementUnit } from "@/types";
 
 interface FlexibleMeasurementInputsProps {
   field: MeasurementFieldConfig;
-  centimeters: number | "";
-  inches: number | "";
-  onChange: (field: string, unit: MeasurementUnit, value: string) => void;
+  centimeters: number | string | "";
+  inches: number | string | "";
+  onChange: (field: string, unit: MeasurementUnit, value: string, isText?: boolean) => void;
   error?: string;
 }
 
@@ -16,7 +16,7 @@ export default function FlexibleMeasurementInputs({
   onChange,
   error,
 }: FlexibleMeasurementInputsProps) {
-  const input = (unit: MeasurementUnit, value: number | "", label: string) => (
+  const input = (unit: MeasurementUnit, value: number | string | "", label: string) => (
     <label className="min-w-0 space-y-1">
       <span className="block text-center text-xs font-bold text-slate-500">
         {label}
@@ -24,8 +24,6 @@ export default function FlexibleMeasurementInputs({
       <input
         type="number"
         step="0.25"
-        min={field.min ?? 0}
-        max={field.max ?? 500}
         placeholder="0.0"
         value={value}
         aria-label={`${field.label} ${unit === "cm" ? "بالسنتيمتر" : "بالإنش"}`}

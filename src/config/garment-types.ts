@@ -5,10 +5,8 @@ import { SAUDI_CONFIG } from "./garments/saudi";
 export type MeasurementFieldConfig = {
   name: string;
   label: string;
-  unit: "cm" | "inch" | "cm_or_inch";
+  unit: "cm" | "inch" | "cm_or_inch" | "cm_and_inch_independent" | "text";
   required: boolean;
-  min?: number;
-  max?: number;
 };
 
 export type GarmentOptionConfig = {
@@ -34,7 +32,8 @@ export const FIELD_LABEL_TRANSLATIONS: Record<string, string> = {
   length: "الطول الكلي",
   shoulder: "عرض الكتف",
   sleeve: "طول الكم",
-  width: "الوسع / الصدر",
+  width: "الوسع (سم)",
+  width_inch: "الوسع (إنش)",
   chest: "محيط الصدر",
   bottom_width: "وسع الديل (الأتك)",
   sleeve_width: "وسع الكم",

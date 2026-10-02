@@ -38,13 +38,43 @@ export default function MeasurementFormV2({
     );
     const fields = config.measurements.concat(...conditional);
     const measurements: MeasurementInputValue[] = fields
-      .map((field) => ({
-        field_name: field.name,
-        value: state.measurements[field.name]?.value ?? "",
-        unit:
-          state.measurements[field.name]?.unit ??
-          (field.unit === "cm_or_inch" ? "cm" : field.unit),
-      }))
+      .flatMap((field) => {
+        if (field.unit === "cm_and_inch_independent") {
+          return [
+            {
+              field_name: field.name,
+              value: state.measurements[field.name]?.value ?? "",
+              unit: "cm" as const,
+            },
+            {
+              field_name: `${field.name}_inch`,
+              value: state.measurements[`${field.name}_inch`]?.value ?? "",
+              unit: "inch" as const,
+            },
+          ];
+        }
+        if (field.unit === "text") {
+          const textVal = state.measurements[field.name]?.value ?? "";
+          if (textVal === "") return [];
+          return [
+            {
+              field_name: field.name,
+              value: 0,
+              unit: "cm" as const,
+              notes: String(textVal),
+            },
+          ];
+        }
+        return [
+          {
+            field_name: field.name,
+            value: state.measurements[field.name]?.value ?? "",
+            unit:
+              state.measurements[field.name]?.unit ??
+              (field.unit === "cm_or_inch" ? "cm" : field.unit as "cm" | "inch"),
+          },
+        ];
+      })
       .filter((item) => item.value !== "");
     const options = Object.entries(state.options).map(
       ([option_name, option_value]) => ({ option_name, option_value }),

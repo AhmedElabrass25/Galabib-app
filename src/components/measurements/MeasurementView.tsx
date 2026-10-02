@@ -53,14 +53,16 @@ export default function MeasurementView({
               FIELD_LABEL_TRANSLATIONS[m.field_name] ||
               m.field_name;
 
-            const formattedValue = formatWithConversion(
-              Number(m.value),
-              m.unit,
-            );
+            // Check if this is a text measurement (value=0, notes has content)
+            const isTextMeasurement = m.notes && m.notes.length > 0 && Number(m.value) === 0;
+
+            const formattedValue = isTextMeasurement
+              ? m.notes!
+              : formatWithConversion(Number(m.value), m.unit);
             // Split primary value and converted value in parentheses
             const parts = formattedValue.split("(");
             const primaryValue = parts[0]?.trim() || "";
-            const convertedValue = parts[1] ? `(${parts[1]}` : "";
+            const convertedValue = !isTextMeasurement && parts[1] ? `(${parts[1]}` : "";
 
             return (
               <div

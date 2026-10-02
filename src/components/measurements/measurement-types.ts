@@ -2,7 +2,7 @@ import type { MeasurementUnit, GarmentType } from "@/types";
 
 export interface MeasurementInputValue {
   field_name: string;
-  value: number | "";
+  value: number | string | "";
   unit: MeasurementUnit;
   notes?: string;
 }
@@ -14,7 +14,7 @@ export interface OptionInputValue {
 
 export type MeasurementState = Record<
   string,
-  { value: number | ""; unit: MeasurementUnit }
+  { value: number | string | ""; unit: MeasurementUnit }
 >;
 
 export interface MeasurementFormProps {

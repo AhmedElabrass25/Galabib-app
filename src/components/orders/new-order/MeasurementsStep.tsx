@@ -53,33 +53,38 @@ export default function MeasurementsStep({
             سيتم حفظ هذه المقاسات مستقلة تمامًا لهذا الطلب
           </p>
         </div>
-        {customerId && matchingOrders.length > 0 && (
-          <div className="flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50 p-2">
-            <Copy className="size-4 shrink-0 text-primary" />
+      </header>
+      {customerId && matchingOrders.length > 0 && (
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-xl border border-primary/20 bg-primary/5 p-4 animate-fade-in shadow-xs">
+          <div className="flex items-start sm:items-center gap-3">
+            <div className="bg-white p-2 rounded-lg shadow-2xs border border-primary/10">
+              <span className="text-xl">✨</span>
+            </div>
+            <div>
+              <h4 className="font-bold text-primary text-sm flex items-center gap-2">
+                تم استرجاع مقاسات العميل تلقائياً
+              </h4>
+              <p className="text-xs font-semibold text-slate-600 mt-1 max-w-md leading-relaxed">
+                تم جلب مقاسات آخر طلب تفصيل للعميل ({GARMENT_TYPE_LABELS[garmentType]}). يمكنك التعديل عليها مباشرةً، أو استدعاء مقاسات من طلب أقدم.
+              </p>
+            </div>
+          </div>
+          
+          <div className="w-full sm:w-auto min-w-[240px] shrink-0">
             <Select onValueChange={onCopy}>
-              <SelectTrigger className="min-h-9 w-full border-0 bg-transparent px-1 py-1 text-xs text-primary shadow-none hover:border-transparent">
-                <SelectValue
-                  placeholder={`نسخ المقاسات من طلب سابق (${GARMENT_TYPE_LABELS[garmentType]})`}
-                />
+              <SelectTrigger className="w-full h-11 bg-white border-slate-300 gap-2 font-bold text-slate-700 shadow-xs hover:border-primary/50 transition-colors">
+                <Copy className="size-4 text-primary shrink-0" />
+                <SelectValue placeholder="نسخ مقاسات من طلب أقدم..." />
               </SelectTrigger>
               <SelectContent>
                 {matchingOrders.map((order) => (
-                  <SelectItem key={order.id} value={order.id}>
-                    طلب بتاريخ {formatDate(order.created_at)} ({order.quantity}{" "}
-                    قطعة)
+                  <SelectItem key={order.id} value={order.id} className="font-semibold text-sm">
+                    طلب بتاريخ {formatDate(order.created_at)} ({order.quantity} قطعة)
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
-        )}
-      </header>
-      {customerId && matchingOrders.length > 0 && (
-        <div className="flex items-center gap-2.5 rounded-xl border border-emerald-200 bg-emerald-50/80 p-3 text-xs text-emerald-900 font-semibold animate-fade-in">
-          <span className="text-base">✨</span>
-          <p>
-            تم جلب مقاسات وخيارات آخر طلب تفصيل للعميل تلقائياً ({GARMENT_TYPE_LABELS[garmentType]}). يمكنك التعديل عليها مباشرةً وسيحفظ هذا الطلب بمقاساته المستقلة.
-          </p>
         </div>
       )}
       <MeasurementForm

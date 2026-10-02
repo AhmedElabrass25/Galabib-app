@@ -47,7 +47,7 @@ create table if not exists public.measurements (
   owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
   order_id uuid not null,
   field_name text not null,
-  value numeric(7, 2) not null check (value > 0 and value <= 999),
+  value numeric(7, 2) not null,
   unit text not null check (unit in ('cm', 'inch')),
   notes text not null default '',
   created_at timestamptz not null default now(),

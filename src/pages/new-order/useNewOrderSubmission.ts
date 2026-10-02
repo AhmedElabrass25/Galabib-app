@@ -55,17 +55,14 @@ export default function useNewOrderSubmission(draft: NewOrderSubmissionProps) {
       );
       const value = Number(measurement?.value);
       const key = `measurement.${field.name}`;
-      if (
-        field.required &&
-        (!measurement || !Number.isFinite(value) || value <= 0)
-      ) {
-        errors[key] = "هذا المقاس مطلوب";
-      } else if (
-        measurement &&
-        (value < (field.min ?? 0) || value > (field.max ?? 500))
-      ) {
-        errors[key] =
-          `القيمة يجب أن تكون بين ${field.min ?? 0} و${field.max ?? 500}`;
+      if (field.unit === "text") {
+        if (field.required && (!measurement || !measurement.notes)) {
+          errors[key] = "هذا المقاس مطلوب";
+        }
+      } else {
+        if (field.required && (!measurement || !Number.isFinite(value) || value <= 0)) {
+          errors[key] = "هذا المقاس مطلوب";
+        }
       }
     }
     setFieldErrors(errors);

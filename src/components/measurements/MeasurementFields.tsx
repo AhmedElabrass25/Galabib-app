@@ -8,7 +8,7 @@ interface MeasurementFieldsProps {
   fields: MeasurementFieldConfig[];
   values: MeasurementState;
   errors?: Record<string, string>;
-  onChange: (field: string, unit: MeasurementUnit, value: string) => void;
+  onChange: (field: string, unit: MeasurementUnit, value: string, isText?: boolean) => void;
 }
 
 export default function MeasurementFields({

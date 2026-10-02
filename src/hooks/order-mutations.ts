@@ -81,3 +81,46 @@ export function useDeleteOrder() {
     },
   });
 }
+
+export interface UpdateOrderMeasurementsPayload {
+  orderId: string;
+  measurements: Omit<Measurement, "id" | "order_id" | "created_at">[];
+  options: Omit<OrderOption, "id" | "order_id" | "created_at">[];
+}
+
+export function useUpdateOrderMeasurements() {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: async (payload: UpdateOrderMeasurementsPayload) => {
+      // 1. Delete old measurements & options
+      const { error: delMErr } = await supabase.from("measurements").delete().eq("order_id", payload.orderId);
+      if (delMErr) throw new Error(delMErr.message);
+
+      const { error: delOErr } = await supabase.from("order_options").delete().eq("order_id", payload.orderId);
+      if (delOErr) throw new Error(delOErr.message);
+
+      // 2. Insert new measurements
+      if (payload.measurements.length) {
+        const { error: mErr } = await supabase
+          .from("measurements")
+          .insert(payload.measurements.map((m) => ({ ...m, order_id: payload.orderId })));
+        if (mErr) throw new Error(mErr.message);
+      }
+
+      // 3. Insert new options
+      if (payload.options.length) {
+        const { error: oErr } = await supabase
+          .from("order_options")
+          .insert(payload.options.map((o) => ({ ...o, order_id: payload.orderId })));
+        if (oErr) throw new Error(oErr.message);
+      }
+
+      return payload;
+    },
+    onSuccess: (_, variables) => {
+      client.invalidateQueries({ queryKey: ["order", variables.orderId] });
+      client.invalidateQueries({ queryKey: ["orders"] });
+      client.invalidateQueries({ queryKey: ["customer-orders"] });
+    },
+  });
+}

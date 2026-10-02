@@ -11,7 +11,7 @@ import FlexibleMeasurementInputs from "./FlexibleMeasurementInputs";
 interface MeasurementFieldCardProps {
   field: MeasurementFieldConfig;
   values: MeasurementState;
-  onChange: (field: string, unit: MeasurementUnit, value: string) => void;
+  onChange: (field: string, unit: MeasurementUnit, value: string, isText?: boolean) => void;
   error?: string;
 }
 
@@ -21,25 +21,29 @@ export default function MeasurementFieldCard({
   onChange,
   error,
 }: MeasurementFieldCardProps) {
+  const isText = field.unit === "text";
   const item = values[field.name] ?? {
     value: "",
-    unit: field.unit === "cm_or_inch" ? "cm" : field.unit,
+    unit: field.unit === "cm_or_inch" ? "cm" : field.unit === "text" ? "cm" : field.unit,
   };
   const flexible = field.unit === "cm_or_inch";
+  const independent = field.unit === "cm_and_inch_independent";
+  const independentCm = values[field.name]?.value ?? "";
+  const independentInch = values[`${field.name}_inch`]?.value ?? "";
   const centimeters =
-    item.value === ""
+    item.value === "" || isText
       ? ""
       : item.unit === "cm"
         ? item.value
-        : convertInchToCm(item.value);
+        : convertInchToCm(item.value as number);
   const inches =
-    item.value === ""
+    item.value === "" || isText
       ? ""
       : item.unit === "inch"
         ? item.value
-        : convertCmToInch(item.value);
+        : convertCmToInch(item.value as number);
   const converted =
-    typeof item.value === "number" && !flexible
+    typeof item.value === "number" && !flexible && !isText
       ? getConvertedValue(item.value, item.unit)
       : undefined;
   const inputClass =
@@ -59,7 +63,48 @@ export default function MeasurementFieldCard({
           </span>
         )}
       </header>
-      {flexible ? (
+      {isText ? (
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            placeholder="مثال: 39-29"
+            value={item.value}
+            aria-label={field.label}
+            aria-invalid={!!error}
+            onChange={(event) =>
+              onChange(field.name, "cm", event.target.value, true)
+            }
+            className={`flex-1 ${inputClass}`}
+          />
+        </div>
+      ) : independent ? (
+        <div className="grid grid-cols-2 gap-2">
+          <label className="min-w-0 space-y-1">
+            <span className="block text-center text-xs font-bold text-slate-500">سم</span>
+            <input
+              type="number"
+              step="0.25"
+              placeholder="0.0"
+              value={independentCm}
+              aria-label={`${field.label} بالسنتيمتر`}
+              onChange={(e) => onChange(field.name, "cm", e.target.value)}
+              className={inputClass}
+            />
+          </label>
+          <label className="min-w-0 space-y-1">
+            <span className="block text-center text-xs font-bold text-slate-500">إنش</span>
+            <input
+              type="number"
+              step="0.25"
+              placeholder="0.0"
+              value={independentInch}
+              aria-label={`${field.label} بالإنش`}
+              onChange={(e) => onChange(`${field.name}_inch`, "inch", e.target.value)}
+              className={inputClass}
+            />
+          </label>
+        </div>
+      ) : flexible ? (
         <FlexibleMeasurementInputs
           field={field}
           centimeters={centimeters}
@@ -72,8 +117,6 @@ export default function MeasurementFieldCard({
           <input
             type="number"
             step="0.25"
-            min={field.min ?? 0}
-            max={field.max ?? 500}
             placeholder="0.0"
             value={item.value}
             aria-label={field.label}

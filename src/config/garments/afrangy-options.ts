@@ -26,8 +26,6 @@ export const AFRANGY_OPTIONS: GarmentOptionConfig[] = [
           label: "مقاس الأساور",
           unit: "inch",
           required: true,
-          min: 5,
-          max: 20,
         },
       ],
     },

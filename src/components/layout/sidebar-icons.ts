@@ -6,12 +6,16 @@ import {
   Ruler,
   Settings,
   Users,
+  Flame,
+  AlertCircle,
 } from "lucide-react";
 
 const ICON_MAP = {
   LayoutDashboard,
   Users,
   ClipboardList,
+  Flame,
+  AlertCircle,
   Ruler,
   Database,
   Images,

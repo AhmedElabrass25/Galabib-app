@@ -29,6 +29,32 @@ export default function useNewOrderDraft(preselectedCustomerId: string | null) {
     if (preselectedCustomerId) setCustomerId(preselectedCustomerId);
   }, [preselectedCustomerId]);
 
+  // Auto-fill measurements from latest matching order when customer or garment type changes
+  useEffect(() => {
+    if (!customerId || !customerOrders.length) return;
+    const latestOrder = customerOrders.find((o) => o.garment_type === garmentType);
+    if (!latestOrder) return;
+
+    if (latestOrder.measurements?.length) {
+      setMeasurements(
+        latestOrder.measurements.map((item) => ({
+          field_name: item.field_name,
+          value: Number(item.value),
+          unit: item.unit,
+        }))
+      );
+    }
+
+    if (latestOrder.order_options?.length) {
+      setOptions(
+        latestOrder.order_options.map((item) => ({
+          option_name: item.option_name,
+          option_value: item.option_value,
+        }))
+      );
+    }
+  }, [customerId, garmentType, customerOrders]);
+
   return {
     customerId,
     setCustomerId,

@@ -2,8 +2,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { customerSchema, type CustomerFormData } from '@/lib/validations';
 import type { Customer } from '@/types';
-import { X, User, Phone, FileText } from 'lucide-react';
-import { useEffect } from 'react';
+import { X, User, Phone, FileText, AlertTriangle } from 'lucide-react';
+import { useEffect, useMemo } from 'react';
+import { useCustomers } from '@/hooks/useCustomers';
 
 interface CustomerFormModalProps {
   isOpen: boolean;
@@ -21,11 +22,13 @@ export default function CustomerFormModal({
   isLoading = false,
 }: CustomerFormModalProps) {
   const isEditing = !!customer;
+  const { data: existingCustomers = [] } = useCustomers();
 
   const {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm<CustomerFormData>({
     resolver: zodResolver(customerSchema),
@@ -35,6 +38,28 @@ export default function CustomerFormModal({
       notes: '',
     },
   });
+
+  const watchedName = watch('name')?.trim() || '';
+  const watchedPhone = watch('phone')?.trim() || '';
+
+  // Separate Phone Duplicate (Strict Block) and Name Duplicate (Soft Warning)
+  const duplicatePhoneMatch = useMemo(() => {
+    if (!watchedPhone) return null;
+    return existingCustomers.find((c) => {
+      if (isEditing && c.id === customer?.id) return false;
+      return c.phone.trim() === watchedPhone;
+    });
+  }, [watchedPhone, existingCustomers, isEditing, customer]);
+
+  const duplicateNameMatches = useMemo(() => {
+    if (!watchedName) return [];
+    return existingCustomers.filter((c) => {
+      if (isEditing && c.id === customer?.id) return false;
+      const sameName = c.name.trim().toLowerCase() === watchedName.toLowerCase();
+      const differentPhone = c.phone.trim() !== watchedPhone;
+      return sameName && differentPhone;
+    });
+  }, [watchedName, watchedPhone, existingCustomers, isEditing, customer]);
 
   useEffect(() => {
     if (customer) {
@@ -51,6 +76,9 @@ export default function CustomerFormModal({
   if (!isOpen) return null;
 
   const handleFormSubmit = async (data: CustomerFormData) => {
+    if (duplicatePhoneMatch) {
+      return; // Block submission strictly
+    }
     await onSubmit(data);
     onClose();
   };
@@ -103,13 +131,49 @@ export default function CustomerFormModal({
               placeholder="01000000000"
               {...register('phone')}
               className={`w-full bg-gray-50 border rounded-xl px-4 text-lg font-bold font-mono text-text-primary text-right outline-hidden focus:bg-white transition-all min-h-[60px] ${
-                errors.phone ? 'border-red-500 bg-red-50/20' : 'border-gray-300'
+                errors.phone || duplicatePhoneMatch
+                  ? 'border-red-500 bg-red-50/30 ring-2 ring-red-200'
+                  : 'border-gray-300'
               }`}
             />
             {errors.phone && (
               <p className="text-sm text-red-500 font-bold">{errors.phone.message}</p>
             )}
+
+            {/* Strict Phone Duplicate Error */}
+            {duplicatePhoneMatch && (
+              <div className="p-3 rounded-xl border border-rose-300 bg-rose-50 text-rose-900 text-xs font-bold space-y-1 animate-fade-in flex items-start gap-2">
+                <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-rose-800">
+                    🛑 لا يمكن الحفظ: رقم الهاتف هذا مسجل سلفاً باسم العميل{' '}
+                    <span className="underline font-black">{duplicatePhoneMatch.name}</span>.
+                  </p>
+                  <p className="text-rose-600 font-medium mt-0.5">
+                    يرجى ادخال رقم هاتف مختلف لمنع تكرار البيانات.
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
+
+          {/* Soft Duplicate Name Warning */}
+          {duplicateNameMatches.length > 0 && !duplicatePhoneMatch && (
+            <div className="p-3.5 rounded-xl border border-amber-300 bg-amber-50 text-amber-900 text-xs space-y-1 animate-fade-in">
+              <div className="flex items-center gap-2 font-bold text-amber-800">
+                <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+                <span>تنبيه: يوجد عميل مسجل بهذا الاسم ولكن برقم هاتف مختلف!</span>
+              </div>
+              {duplicateNameMatches.map((m) => (
+                <p key={m.id} className="text-xs text-amber-700 font-semibold mr-6">
+                  • {m.name} ({m.phone})
+                </p>
+              ))}
+              <p className="text-xs text-amber-600 font-medium mr-6 pt-0.5">
+                * يمكنك الحفظ بشكل طبيعي لأن رقم الهاتف مختلف.
+              </p>
+            </div>
+          )}
 
           {/* Notes */}
           <div className="space-y-2">
@@ -139,8 +203,8 @@ export default function CustomerFormModal({
             </button>
             <button
               type="submit"
-              disabled={isLoading}
-              className="px-8 min-h-[56px] rounded-xl bg-primary hover:bg-primary-dark text-white text-lg font-black transition-all shadow-md active:scale-95 disabled:opacity-50"
+              disabled={isLoading || !!duplicatePhoneMatch}
+              className="px-8 min-h-[56px] rounded-xl bg-primary hover:bg-primary-dark text-white text-lg font-black transition-all shadow-md active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
             >
               {isLoading ? 'جاري الحفظ...' : isEditing ? 'تعديل البيانات' : 'حفظ العميل'}
             </button>

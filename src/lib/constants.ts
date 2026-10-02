@@ -39,9 +39,9 @@ export const UNIT_LABEL_FOR_FIELD: Record<MeasurementFieldUnit, string> = {
 // ===== Sidebar Navigation =====
 export const NAV_ITEMS = [
   { path: "/", label: "الرئيسية", icon: "LayoutDashboard" as const },
+  { path: "/priority", label: "المواعيد الحرجة", icon: "Flame" as const },
   { path: "/customers", label: "العملاء", icon: "Users" as const },
   { path: "/orders", label: "الطلبات", icon: "ClipboardList" as const },
-  // { path: "/showcase", label: "معرض المحل", icon: "Images" as const },
   { path: "/measurements", label: "المقاسات", icon: "Ruler" as const },
   { path: "/backup", label: "النسخ الاحتياطي", icon: "Database" as const },
 ];

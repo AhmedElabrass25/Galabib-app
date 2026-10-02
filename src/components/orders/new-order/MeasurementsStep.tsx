@@ -74,6 +74,14 @@ export default function MeasurementsStep({
           </div>
         )}
       </header>
+      {customerId && matchingOrders.length > 0 && (
+        <div className="flex items-center gap-2.5 rounded-xl border border-emerald-200 bg-emerald-50/80 p-3 text-xs text-emerald-900 font-semibold animate-fade-in">
+          <span className="text-base">✨</span>
+          <p>
+            تم جلب مقاسات وخيارات آخر طلب تفصيل للعميل تلقائياً ({GARMENT_TYPE_LABELS[garmentType]}). يمكنك التعديل عليها مباشرةً وسيحفظ هذا الطلب بمقاساته المستقلة.
+          </p>
+        </div>
+      )}
       <MeasurementForm
         garmentType={garmentType}
         initialMeasurements={measurements}

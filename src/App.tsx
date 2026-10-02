@@ -14,6 +14,7 @@ import OrderDetailsPage from "@/pages/OrderDetailsPageV2";
 import SettingsPage from "@/pages/SettingsPageV2";
 import ShowcasePage from "@/pages/showcase/ShowcasePage";
 import LoginPage from "@/pages/LoginPage";
+import PriorityBoardPage from "@/pages/PriorityBoardPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -60,6 +61,7 @@ export default function App() {
           {session ? (
             <Route path="/" element={<MainLayout />}>
               <Route index element={<DashboardPage />} />
+              <Route path="priority" element={<PriorityBoardPage />} />
               <Route path="customers" element={<CustomersPage />} />
               <Route path="customers/:id" element={<CustomerDetailsPage />} />
               <Route path="orders" element={<OrdersPage />} />

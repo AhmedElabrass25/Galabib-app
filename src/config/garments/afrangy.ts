@@ -62,7 +62,7 @@ export const AFRANGY_CONFIG: GarmentTypeConfig = {
     {
       name: "bottom_width",
       label: "الديل / الأتك",
-      unit: "cm_or_inch",
+      unit: "cm",
       required: true,
     },
   ],

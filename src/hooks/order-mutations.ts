@@ -24,7 +24,13 @@ export function useCreateOrder() {
       if (payload.measurements.length) {
         const { error: mErr } = await supabase
           .from("measurements")
-          .insert(payload.measurements.map((m) => ({ ...m, order_id: data.id })));
+          .insert(
+            payload.measurements.map((m) => ({
+              ...m,
+              notes: m.notes ?? "",
+              order_id: data.id,
+            })),
+          );
         if (mErr) throw new Error(mErr.message);
       }
 
@@ -93,17 +99,29 @@ export function useUpdateOrderMeasurements() {
   return useMutation({
     mutationFn: async (payload: UpdateOrderMeasurementsPayload) => {
       // 1. Delete old measurements & options
-      const { error: delMErr } = await supabase.from("measurements").delete().eq("order_id", payload.orderId);
+      const { error: delMErr } = await supabase
+        .from("measurements")
+        .delete()
+        .eq("order_id", payload.orderId);
       if (delMErr) throw new Error(delMErr.message);
 
-      const { error: delOErr } = await supabase.from("order_options").delete().eq("order_id", payload.orderId);
+      const { error: delOErr } = await supabase
+        .from("order_options")
+        .delete()
+        .eq("order_id", payload.orderId);
       if (delOErr) throw new Error(delOErr.message);
 
       // 2. Insert new measurements
       if (payload.measurements.length) {
         const { error: mErr } = await supabase
           .from("measurements")
-          .insert(payload.measurements.map((m) => ({ ...m, order_id: payload.orderId })));
+          .insert(
+            payload.measurements.map((m) => ({
+              ...m,
+              notes: m.notes ?? "",
+              order_id: payload.orderId,
+            })),
+          );
         if (mErr) throw new Error(mErr.message);
       }
 
@@ -111,7 +129,9 @@ export function useUpdateOrderMeasurements() {
       if (payload.options.length) {
         const { error: oErr } = await supabase
           .from("order_options")
-          .insert(payload.options.map((o) => ({ ...o, order_id: payload.orderId })));
+          .insert(
+            payload.options.map((o) => ({ ...o, order_id: payload.orderId })),
+          );
         if (oErr) throw new Error(oErr.message);
       }
 

@@ -41,6 +41,7 @@ export default function useNewOrderActions({
           field_name: item.field_name,
           value: Number(item.value),
           unit: item.unit,
+          notes: item.notes || "",
         })),
       );
     if (order.order_options?.length)

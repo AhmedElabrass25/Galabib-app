@@ -23,7 +23,8 @@ export default function useNewOrderDraft(preselectedCustomerId: string | null) {
   const [options, setOptions] = useState<OptionInputValue[]>([]);
   const [isCustomerModalOpen, setIsCustomerModalOpen] = useState(false);
   const { data: customers = [], isLoading: loadingCustomers } = useCustomers();
-  const { data: customerOrders = [] } = useCustomerOrders(customerId);
+  const { data: customerOrders = [], isLoading: loadingCustomerOrders } =
+    useCustomerOrders(customerId);
 
   useEffect(() => {
     if (preselectedCustomerId) setCustomerId(preselectedCustomerId);
@@ -32,7 +33,9 @@ export default function useNewOrderDraft(preselectedCustomerId: string | null) {
   // Auto-fill measurements from latest matching order when customer or garment type changes
   useEffect(() => {
     if (!customerId || !customerOrders.length) return;
-    const latestOrder = customerOrders.find((o) => o.garment_type === garmentType);
+    const latestOrder = customerOrders.find(
+      (o) => o.garment_type === garmentType,
+    );
     if (!latestOrder) return;
 
     if (latestOrder.measurements?.length) {
@@ -41,7 +44,8 @@ export default function useNewOrderDraft(preselectedCustomerId: string | null) {
           field_name: item.field_name,
           value: Number(item.value),
           unit: item.unit,
-        }))
+          notes: item.notes || "",
+        })),
       );
     }
 
@@ -50,7 +54,7 @@ export default function useNewOrderDraft(preselectedCustomerId: string | null) {
         latestOrder.order_options.map((item) => ({
           option_name: item.option_name,
           option_value: item.option_value,
-        }))
+        })),
       );
     }
   }, [customerId, garmentType, customerOrders]);
@@ -77,5 +81,6 @@ export default function useNewOrderDraft(preselectedCustomerId: string | null) {
     customers,
     loadingCustomers,
     customerOrders,
+    loadingCustomerOrders,
   };
 }

@@ -25,7 +25,7 @@ export const BALADY_CONFIG: GarmentTypeConfig = {
     {
       name: "shoulder",
       label: "الأبه  ",
-      unit: "cm_or_inch",
+      unit: "cm_and_inch_independent",
       required: true,
     },
     {

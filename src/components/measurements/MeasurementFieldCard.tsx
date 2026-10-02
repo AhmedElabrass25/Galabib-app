@@ -11,7 +11,12 @@ import FlexibleMeasurementInputs from "./FlexibleMeasurementInputs";
 interface MeasurementFieldCardProps {
   field: MeasurementFieldConfig;
   values: MeasurementState;
-  onChange: (field: string, unit: MeasurementUnit, value: string, isText?: boolean) => void;
+  onChange: (
+    field: string,
+    unit: MeasurementUnit,
+    value: string,
+    isText?: boolean,
+  ) => void;
   error?: string;
 }
 
@@ -24,7 +29,12 @@ export default function MeasurementFieldCard({
   const isText = field.unit === "text";
   const item = values[field.name] ?? {
     value: "",
-    unit: field.unit === "cm_or_inch" ? "cm" : field.unit === "text" ? "cm" : field.unit,
+    unit:
+      field.unit === "cm_or_inch"
+        ? "cm"
+        : field.unit === "text"
+          ? "cm"
+          : field.unit,
   };
   const flexible = field.unit === "cm_or_inch";
   const independent = field.unit === "cm_and_inch_independent";
@@ -43,7 +53,7 @@ export default function MeasurementFieldCard({
         ? item.value
         : convertCmToInch(item.value as number);
   const converted =
-    typeof item.value === "number" && !flexible && !isText
+    typeof item.value === "number" && !flexible && !independent && !isText
       ? getConvertedValue(item.value, item.unit)
       : undefined;
   const inputClass =
@@ -80,7 +90,9 @@ export default function MeasurementFieldCard({
       ) : independent ? (
         <div className="grid grid-cols-2 gap-2">
           <label className="min-w-0 space-y-1">
-            <span className="block text-center text-xs font-bold text-slate-500">سم</span>
+            <span className="block text-center text-xs font-bold text-slate-500">
+              سم
+            </span>
             <input
               type="number"
               step="0.25"
@@ -92,14 +104,18 @@ export default function MeasurementFieldCard({
             />
           </label>
           <label className="min-w-0 space-y-1">
-            <span className="block text-center text-xs font-bold text-slate-500">إنش</span>
+            <span className="block text-center text-xs font-bold text-slate-500">
+              إنش
+            </span>
             <input
               type="number"
               step="0.25"
               placeholder="0.0"
               value={independentInch}
               aria-label={`${field.label} بالإنش`}
-              onChange={(e) => onChange(`${field.name}_inch`, "inch", e.target.value)}
+              onChange={(e) =>
+                onChange(`${field.name}_inch`, "inch", e.target.value)
+              }
               className={inputClass}
             />
           </label>

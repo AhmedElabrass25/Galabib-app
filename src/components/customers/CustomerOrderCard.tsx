@@ -66,7 +66,7 @@ export default function CustomerOrderCard({
       {expanded && (
         <div className="animate-fade-in space-y-4 p-5">
           {order.notes && (
-            <p className="rounded-lg border border-gray-100 bg-gray-50 p-2.5 text-xs text-text-secondary">
+            <p className="whitespace-pre-wrap break-words rounded-lg border border-gray-100 bg-gray-50 p-2.5 text-xs font-semibold text-text-primary">
               <strong>ملاحظات الطلب: </strong>
               {order.notes}
             </p>

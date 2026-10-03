@@ -47,7 +47,7 @@ export default function PriorityBoardPage() {
   // Filter active orders (not delivered or cancelled)
   const activeOrders = useMemo(() => {
     return orders.filter(
-      (o) => o.status !== "delivered" && o.status !== "cancelled"
+      (o) => o.status !== "delivered" && o.status !== "cancelled",
     );
   }, [orders]);
 
@@ -85,7 +85,12 @@ export default function PriorityBoardPage() {
     }
   };
 
-  const getWhatsAppLink = (phone: string, customerName: string, garment: string, status: string) => {
+  const getWhatsAppLink = (
+    phone: string,
+    customerName: string,
+    garment: string,
+    status: string,
+  ) => {
     let cleanPhone = phone.replace(/\D/g, "");
     if (!cleanPhone.startsWith("2") && cleanPhone.startsWith("0")) {
       cleanPhone = "2" + cleanPhone;
@@ -94,16 +99,27 @@ export default function PriorityBoardPage() {
     if (status === "ready") {
       text += "الجلابية جاهزة للاستلام الآن بالمحل. يشرفنا زيارتك!";
     } else {
-      text += "نحيطك علماً بأن الطلب جاري العمل عليه في الورشة وسيتم إبلاغك فور الجاهزية.";
+      text +=
+        "نحيطك علماً بأن الطلب جاري العمل عليه في الورشة وسيتم إبلاغك فور الجاهزية.";
     }
     return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`;
   };
 
   if (isLoading)
-    return <LoadingState message="جاري تحميل لوحة المواعيد الحرجة..." variant="dashboard" />;
+    return (
+      <LoadingState
+        message="جاري تحميل لوحة المواعيد الحرجة..."
+        variant="dashboard"
+      />
+    );
 
   if (isError)
-    return <ErrorState message="تعذر تحميل طلبات المواعيد الحرجة" onRetry={refetch} />;
+    return (
+      <ErrorState
+        message="تعذر تحميل طلبات المواعيد الحرجة"
+        onRetry={refetch}
+      />
+    );
 
   const filteredOrdersList = () => {
     switch (activeTab) {
@@ -121,7 +137,8 @@ export default function PriorityBoardPage() {
   };
 
   const calculateDelayDays = (deliveryDateStr: string) => {
-    const diffTime = new Date(todayStr).getTime() - new Date(deliveryDateStr).getTime();
+    const diffTime =
+      new Date(todayStr).getTime() - new Date(deliveryDateStr).getTime();
     return Math.floor(diffTime / (1000 * 3600 * 24));
   };
 
@@ -170,13 +187,19 @@ export default function PriorityBoardPage() {
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-sm font-black text-rose-800">متأخرة عن الموعد</span>
+            <span className="text-sm font-black text-rose-800">
+              متأخرة عن الموعد
+            </span>
             <div className="w-10 h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center shadow-sm">
               <Flame className="w-5 h-5 animate-bounce" />
             </div>
           </div>
-          <p className="text-3xl font-black text-rose-900 mt-2">{groupedOrders.overdue.length}</p>
-          <p className="text-xs text-rose-700 font-semibold mt-1">تتطلب الإنهاء الفوري بالورشة!</p>
+          <p className="text-3xl font-black text-rose-900 mt-2">
+            {groupedOrders.overdue.length}
+          </p>
+          <p className="text-xs text-rose-700 font-semibold mt-1">
+            تتطلب الإنهاء الفوري بالورشة!
+          </p>
         </div>
 
         {/* Due Today Card */}
@@ -189,13 +212,19 @@ export default function PriorityBoardPage() {
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-sm font-black text-amber-800">تسليم اليوم</span>
+            <span className="text-sm font-black text-amber-800">
+              تسليم اليوم
+            </span>
             <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shadow-sm">
               <Clock className="w-5 h-5" />
             </div>
           </div>
-          <p className="text-3xl font-black text-amber-900 mt-2">{groupedOrders.today.length}</p>
-          <p className="text-xs text-amber-700 font-semibold mt-1">مستحقة التسليم اليوم</p>
+          <p className="text-3xl font-black text-amber-900 mt-2">
+            {groupedOrders.today.length}
+          </p>
+          <p className="text-xs text-amber-700 font-semibold mt-1">
+            مستحقة التسليم اليوم
+          </p>
         </div>
 
         {/* Due Tomorrow Card */}
@@ -213,8 +242,12 @@ export default function PriorityBoardPage() {
               <Calendar className="w-5 h-5" />
             </div>
           </div>
-          <p className="text-3xl font-black text-blue-900 mt-2">{groupedOrders.tomorrow.length}</p>
-          <p className="text-xs text-blue-700 font-semibold mt-1">للتجهيز والمتابعة المسبقة</p>
+          <p className="text-3xl font-black text-blue-900 mt-2">
+            {groupedOrders.tomorrow.length}
+          </p>
+          <p className="text-xs text-blue-700 font-semibold mt-1">
+            للتجهيز والمتابعة المسبقة
+          </p>
         </div>
 
         {/* Ready Pending Delivery */}
@@ -227,13 +260,19 @@ export default function PriorityBoardPage() {
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-sm font-black text-emerald-800">جاهز بالمحل</span>
+            <span className="text-sm font-black text-emerald-800">
+              جاهز بالمحل
+            </span>
             <div className="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center shadow-sm">
               <CheckCircle2 className="w-5 h-5" />
             </div>
           </div>
-          <p className="text-3xl font-black text-emerald-900 mt-2">{groupedOrders.ready.length}</p>
-          <p className="text-xs text-emerald-700 font-semibold mt-1">في انتظار استلام الزبون</p>
+          <p className="text-3xl font-black text-emerald-900 mt-2">
+            {groupedOrders.ready.length}
+          </p>
+          <p className="text-xs text-emerald-700 font-semibold mt-1">
+            في انتظار استلام الزبون
+          </p>
         </div>
       </div>
 
@@ -411,18 +450,28 @@ export default function PriorityBoardPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredOrdersList().map((order) => {
-              let variant: "overdue" | "today" | "tomorrow" | "ready" | "normal" = "normal";
+              let variant:
+                | "overdue"
+                | "today"
+                | "tomorrow"
+                | "ready"
+                | "normal" = "normal";
               if (order.status === "ready") variant = "ready";
               else if (order.delivery_date < todayStr) variant = "overdue";
               else if (order.delivery_date === todayStr) variant = "today";
-              else if (order.delivery_date === tomorrowStr) variant = "tomorrow";
+              else if (order.delivery_date === tomorrowStr)
+                variant = "tomorrow";
 
               return (
                 <OrderPriorityCard
                   key={order.id}
                   order={order}
                   variant={variant}
-                  delayDays={variant === "overdue" ? calculateDelayDays(order.delivery_date) : undefined}
+                  delayDays={
+                    variant === "overdue"
+                      ? calculateDelayDays(order.delivery_date)
+                      : undefined
+                  }
                   onStatusChange={handleStatusChange}
                   getWhatsAppLink={getWhatsAppLink}
                 />
@@ -440,7 +489,12 @@ interface OrderPriorityCardProps {
   variant: "overdue" | "today" | "tomorrow" | "ready" | "normal";
   delayDays?: number;
   onStatusChange: (id: string, status: OrderStatus) => void;
-  getWhatsAppLink: (phone: string, name: string, garment: string, status: string) => string;
+  getWhatsAppLink: (
+    phone: string,
+    name: string,
+    garment: string,
+    status: string,
+  ) => string;
 }
 
 function OrderPriorityCard({
@@ -454,15 +508,17 @@ function OrderPriorityCard({
     variant === "overdue"
       ? "border-rose-300 bg-white hover:border-rose-500 shadow-rose-100"
       : variant === "today"
-      ? "border-amber-300 bg-white hover:border-amber-500 shadow-amber-100"
-      : variant === "tomorrow"
-      ? "border-blue-300 bg-white hover:border-blue-500 shadow-blue-100"
-      : variant === "ready"
-      ? "border-emerald-300 bg-white hover:border-emerald-500 shadow-emerald-100"
-      : "border-gray-200 bg-white hover:border-gray-300";
+        ? "border-amber-300 bg-white hover:border-amber-500 shadow-amber-100"
+        : variant === "tomorrow"
+          ? "border-blue-300 bg-white hover:border-blue-500 shadow-blue-100"
+          : variant === "ready"
+            ? "border-emerald-300 bg-white hover:border-emerald-500 shadow-emerald-100"
+            : "border-gray-200 bg-white hover:border-gray-300";
 
   return (
-    <div className={`p-4 rounded-xl border shadow-sm transition-all space-y-3 relative ${cardBorderClass}`}>
+    <div
+      className={`p-4 rounded-xl border shadow-sm transition-all space-y-3 relative ${cardBorderClass}`}
+    >
       {/* Header */}
       <div className="flex items-start justify-between gap-2">
         <div>
@@ -473,10 +529,16 @@ function OrderPriorityCard({
             <span>{order.customer?.name || "عميل غير معرف"}</span>
           </Link>
           <div className="flex items-center gap-2 text-xs text-text-secondary mt-0.5">
-            <span className="font-semibold">{GARMENT_TYPE_LABELS[order.garment_type]}</span>
+            <span className="font-semibold">
+              {GARMENT_TYPE_LABELS[order.garment_type]}
+            </span>
             <span>•</span>
-            <span className="font-bold text-primary">{order.quantity} قطعة</span>
-            {order.sadary_count > 0 && <span>(+ {order.sadary_count} سديري)</span>}
+            <span className="font-bold text-primary">
+              {order.quantity} قطعة
+            </span>
+            {order.sadary_count > 0 && (
+              <span>(+ {order.sadary_count} سديري)</span>
+            )}
           </div>
         </div>
         <OrderStatusBadge status={order.status} />
@@ -505,12 +567,14 @@ function OrderPriorityCard({
           <span className="text-blue-700 font-black">تسليم غداً</span>
         )}
         {variant === "ready" && (
-          <span className="text-emerald-700 font-black">جاهز بانتظار الاستلام</span>
+          <span className="text-emerald-700 font-black">
+            جاهز بانتظار الاستلام
+          </span>
         )}
       </div>
 
       {order.notes && (
-        <p className="text-xs text-text-muted bg-gray-50 p-2 rounded-lg italic line-clamp-2">
+        <p className="whitespace-pre-wrap break-words rounded-lg bg-gray-50 p-2 text-xs font-semibold text-text-primary">
           "{order.notes}"
         </p>
       )}
@@ -532,7 +596,7 @@ function OrderPriorityCard({
                   order.customer.phone,
                   order.customer.name,
                   order.garment_type,
-                  order.status
+                  order.status,
                 )}
                 target="_blank"
                 rel="noreferrer"

@@ -86,12 +86,12 @@ export default function OrderBasicsFields({
           <FileText className="size-3.5 text-text-secondary" />
           ملاحظات الطلب
         </span>
-        <input
-          type="text"
+        <textarea
+          rows={3}
           placeholder="أي تفاصيل خاصة بالقماش أو التطريز..."
           value={notes}
           onChange={(event) => onNotesChange(event.target.value)}
-          className="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-sm font-medium outline-hidden"
+          className="w-full resize-y rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-sm font-medium outline-hidden focus:bg-white"
         />
         {errors.notes && (
           <p role="alert" className="text-xs font-semibold text-rose-700">

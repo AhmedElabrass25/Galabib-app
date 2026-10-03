@@ -68,8 +68,11 @@ export default function CustomerCard({
           </span>
         </div>
         {customer.notes && (
-          <p className="mb-4 line-clamp-2 rounded-xl border border-amber-200/80 bg-amber-50/60 p-3 text-xs font-semibold text-slate-600">
-            <strong className="text-amber-900">ملاحظات:</strong>{" "}
+          <p className="mb-4 whitespace-pre-wrap break-words rounded-xl border border-amber-200/80 bg-amber-50/60 p-3 text-2xl font-bold text-slate-700">
+            <strong className="text-amber-900 block text-center text-lg">
+              {" "}
+              ملاحظات العميل{" "}
+            </strong>{" "}
             {customer.notes}
           </p>
         )}

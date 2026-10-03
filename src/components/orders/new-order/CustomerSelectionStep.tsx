@@ -82,7 +82,7 @@ export default function CustomerSelectionStep({
               {customer.phone}
             </p>
             {customer.notes && (
-              <p className="text-xs italic text-text-secondary">
+              <p className="whitespace-pre-wrap break-words text-xs font-semibold text-text-primary">
                 ملاحظات: {customer.notes}
               </p>
             )}

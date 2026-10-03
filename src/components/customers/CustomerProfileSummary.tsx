@@ -27,8 +27,12 @@ export default function CustomerProfileSummary({
           </span>
         </div>
         {customer.notes && (
-          <p className="mt-3 rounded-xl border border-yellow-200 bg-yellow-50/60 p-3 text-sm text-text-secondary">
-            <strong>ملاحظات العميل: </strong>
+          // if text is too long, it will break the layout, so we need to make it scrollable
+          <p className="mb-4 w-full whitespace-pre-wrap break-words rounded-xl border border-amber-200/80 bg-amber-50/60 p-3 text-2xl font-bold text-slate-700">
+            <strong className="text-amber-900 block text-center text-lg">
+              {" "}
+              ملاحظات العميل{" "}
+            </strong>{" "}
             {customer.notes}
           </p>
         )}

@@ -1,10 +1,10 @@
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { customerSchema, type CustomerFormData } from '@/lib/validations';
-import type { Customer } from '@/types';
-import { X, User, Phone, FileText, AlertTriangle } from 'lucide-react';
-import { useEffect, useMemo } from 'react';
-import { useCustomers } from '@/hooks/useCustomers';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { customerSchema, type CustomerFormData } from "@/lib/validations";
+import type { Customer } from "@/types";
+import { X, User, Phone, FileText, AlertTriangle } from "lucide-react";
+import { useEffect, useMemo } from "react";
+import { useCustomers } from "@/hooks/useCustomers";
 
 interface CustomerFormModalProps {
   isOpen: boolean;
@@ -33,14 +33,14 @@ export default function CustomerFormModal({
   } = useForm<CustomerFormData>({
     resolver: zodResolver(customerSchema),
     defaultValues: {
-      name: '',
-      phone: '',
-      notes: '',
+      name: "",
+      phone: "",
+      notes: "",
     },
   });
 
-  const watchedName = watch('name')?.trim() || '';
-  const watchedPhone = watch('phone')?.trim() || '';
+  const watchedName = watch("name")?.trim() || "";
+  const watchedPhone = watch("phone")?.trim() || "";
 
   // Separate Phone Duplicate (Strict Block) and Name Duplicate (Soft Warning)
   const duplicatePhoneMatch = useMemo(() => {
@@ -55,7 +55,8 @@ export default function CustomerFormModal({
     if (!watchedName) return [];
     return existingCustomers.filter((c) => {
       if (isEditing && c.id === customer?.id) return false;
-      const sameName = c.name.trim().toLowerCase() === watchedName.toLowerCase();
+      const sameName =
+        c.name.trim().toLowerCase() === watchedName.toLowerCase();
       const differentPhone = c.phone.trim() !== watchedPhone;
       return sameName && differentPhone;
     });
@@ -66,10 +67,10 @@ export default function CustomerFormModal({
       reset({
         name: customer.name,
         phone: customer.phone,
-        notes: customer.notes || '',
+        notes: customer.notes || "",
       });
     } else {
-      reset({ name: '', phone: '', notes: '' });
+      reset({ name: "", phone: "", notes: "" });
     }
   }, [customer, reset, isOpen]);
 
@@ -95,7 +96,7 @@ export default function CustomerFormModal({
 
         <h3 className="text-2xl font-black text-text-primary mb-6 flex items-center gap-2">
           <User className="w-6 h-6 text-primary" />
-          {isEditing ? 'تعديل بيانات العميل' : 'إضافة عميل جديد'}
+          {isEditing ? "تعديل بيانات العميل" : "إضافة عميل جديد"}
         </h3>
 
         <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
@@ -108,13 +109,15 @@ export default function CustomerFormModal({
             <input
               type="text"
               placeholder="أدخل اسم العميل..."
-              {...register('name')}
+              {...register("name")}
               className={`w-full bg-gray-50 border rounded-xl px-4 text-lg font-semibold text-text-primary outline-hidden focus:bg-white transition-all min-h-[60px] ${
-                errors.name ? 'border-red-500 bg-red-50/20' : 'border-gray-300'
+                errors.name ? "border-red-500 bg-red-50/20" : "border-gray-300"
               }`}
             />
             {errors.name && (
-              <p className="text-sm text-red-500 font-bold">{errors.name.message}</p>
+              <p className="text-sm text-red-500 font-bold">
+                {errors.name.message}
+              </p>
             )}
           </div>
 
@@ -129,15 +132,17 @@ export default function CustomerFormModal({
               type="tel"
               dir="ltr"
               placeholder="01000000000"
-              {...register('phone')}
+              {...register("phone")}
               className={`w-full bg-gray-50 border rounded-xl px-4 text-lg font-bold font-mono text-text-primary text-right outline-hidden focus:bg-white transition-all min-h-[60px] ${
                 errors.phone || duplicatePhoneMatch
-                  ? 'border-red-500 bg-red-50/30 ring-2 ring-red-200'
-                  : 'border-gray-300'
+                  ? "border-red-500 bg-red-50/30 ring-2 ring-red-200"
+                  : "border-gray-300"
               }`}
             />
             {errors.phone && (
-              <p className="text-sm text-red-500 font-bold">{errors.phone.message}</p>
+              <p className="text-sm text-red-500 font-bold">
+                {errors.phone.message}
+              </p>
             )}
 
             {/* Strict Phone Duplicate Error */}
@@ -146,8 +151,11 @@ export default function CustomerFormModal({
                 <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
                 <div>
                   <p className="text-rose-800">
-                    🛑 لا يمكن الحفظ: رقم الهاتف هذا مسجل سلفاً باسم العميل{' '}
-                    <span className="underline font-black">{duplicatePhoneMatch.name}</span>.
+                    🛑 لا يمكن الحفظ: رقم الهاتف هذا مسجل سلفاً باسم العميل{" "}
+                    <span className="underline font-black">
+                      {duplicatePhoneMatch.name}
+                    </span>
+                    .
                   </p>
                   <p className="text-rose-600 font-medium mt-0.5">
                     يرجى ادخال رقم هاتف مختلف لمنع تكرار البيانات.
@@ -162,10 +170,15 @@ export default function CustomerFormModal({
             <div className="p-3.5 rounded-xl border border-amber-300 bg-amber-50 text-amber-900 text-xs space-y-1 animate-fade-in">
               <div className="flex items-center gap-2 font-bold text-amber-800">
                 <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
-                <span>تنبيه: يوجد عميل مسجل بهذا الاسم ولكن برقم هاتف مختلف!</span>
+                <span>
+                  تنبيه: يوجد عميل مسجل بهذا الاسم ولكن برقم هاتف مختلف!
+                </span>
               </div>
               {duplicateNameMatches.map((m) => (
-                <p key={m.id} className="text-xs text-amber-700 font-semibold mr-6">
+                <p
+                  key={m.id}
+                  className="text-xs text-amber-700 font-semibold mr-6"
+                >
                   • {m.name} ({m.phone})
                 </p>
               ))}
@@ -184,11 +197,13 @@ export default function CustomerFormModal({
             <textarea
               rows={3}
               placeholder="أي ملاحظات خاصة بالعميل..."
-              {...register('notes')}
-              className="w-full bg-gray-50 border border-gray-300 rounded-xl p-4 text-lg font-medium text-text-primary outline-hidden focus:bg-white transition-all resize-none min-h-[100px]"
+              {...register("notes")}
+              className="w-full bg-gray-50 border border-gray-300 rounded-xl p-4 text-4xl font-bold text-text-primary outline-hidden focus:bg-white transition-all resize-none min-h-[100px]"
             />
             {errors.notes && (
-              <p className="text-sm text-red-500 font-bold">{errors.notes.message}</p>
+              <p className="text-sm text-red-500 font-bold">
+                {errors.notes.message}
+              </p>
             )}
           </div>
 
@@ -206,7 +221,11 @@ export default function CustomerFormModal({
               disabled={isLoading || !!duplicatePhoneMatch}
               className="px-8 min-h-[56px] rounded-xl bg-primary hover:bg-primary-dark text-white text-lg font-black transition-all shadow-md active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              {isLoading ? 'جاري الحفظ...' : isEditing ? 'تعديل البيانات' : 'حفظ العميل'}
+              {isLoading
+                ? "جاري الحفظ..."
+                : isEditing
+                  ? "تعديل البيانات"
+                  : "حفظ العميل"}
             </button>
           </div>
         </form>

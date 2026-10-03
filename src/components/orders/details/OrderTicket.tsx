@@ -22,8 +22,10 @@ export default function OrderTicket({
       <OrderSummaryGrid order={order} />
       {order.notes && (
         <div className="space-y-1 rounded-xl border border-yellow-200 bg-yellow-50/70 p-4 text-sm">
-          <span className="block font-bold text-amber-900">ملاحظات الطلب:</span>
-          <p className="whitespace-pre-wrap break-words font-bold text-amber-950">
+          <span className="block font-bold text-amber-900 text-2xl">
+            ملاحظات الطلب:
+          </span>
+          <p className="whitespace-pre-wrap break-words text-xl font-bold text-amber-950">
             {order.notes}
           </p>
         </div>

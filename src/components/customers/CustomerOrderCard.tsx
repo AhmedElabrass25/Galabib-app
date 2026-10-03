@@ -34,25 +34,25 @@ export default function CustomerOrderCard({
               {garmentLabel}
               <OrderStatusBadge status={order.status} />
             </span>
-            <span className="mt-0.5 block text-xs text-text-muted">
-              تاريخ الطلب: {formatDate(order.created_at)}
+            <span className="mt-0.5 block text-lg text-text-muted">
+              تاريخ الطلب : {formatDate(order.created_at)}
             </span>
           </span>
         </span>
         <span className="flex items-center gap-4 text-xs font-semibold text-text-secondary">
-          <span>
+          <span className="text-xl">
             العدد:{" "}
             <strong className="text-text-primary">{order.quantity}</strong>
           </span>
           {order.sadary_count > 0 && (
-            <span>
+            <span className="text-xl">
               السداري:{" "}
               <strong className="text-text-primary">
                 {order.sadary_count}
               </strong>
             </span>
           )}
-          <span className="flex items-center gap-1 text-text-primary">
+          <span className="flex items-center gap-1 text-text-primary text-xl font-bold">
             <Calendar className="size-3.5 text-primary" />
             التسليم: {formatDate(order.delivery_date)}
           </span>
@@ -66,8 +66,10 @@ export default function CustomerOrderCard({
       {expanded && (
         <div className="animate-fade-in space-y-4 p-5">
           {order.notes && (
-            <p className="whitespace-pre-wrap break-words rounded-lg border border-gray-100 bg-gray-50 p-2.5 text-xs font-semibold text-text-primary">
-              <strong>ملاحظات الطلب: </strong>
+            <p className="whitespace-pre-wrap break-words rounded-lg border border-gray-100 bg-gray-50 p-2.5 text-xl font-semibold text-text-primary">
+              <strong className="text-text-secondary text-2xl">
+                ملاحظات الطلب :{" "}
+              </strong>
               {order.notes}
             </p>
           )}

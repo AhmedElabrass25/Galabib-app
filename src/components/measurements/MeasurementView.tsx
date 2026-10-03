@@ -125,13 +125,18 @@ export default function MeasurementView({
                   const isAfrangyHem =
                     garmentType === "afrangy" &&
                     measurement.field_name === "bottom_width";
+                  const isAfrangySleeveWidth =
+                    garmentType === "afrangy" &&
+                    measurement.field_name === "sleeve_width";
+                  const displayInCentimeters =
+                    isAfrangyHem || isAfrangySleeveWidth;
                   const displayValue = Number(measurement.value);
                   const displayUnit =
-                    isAfrangyHem && measurement.unit === "inch"
+                    displayInCentimeters && measurement.unit === "inch"
                       ? "cm"
                       : measurement.unit;
                   const normalizedValue =
-                    isAfrangyHem && measurement.unit === "inch"
+                    displayInCentimeters && measurement.unit === "inch"
                       ? convertInchToCm(displayValue)
                       : displayValue;
                   const formattedValue = isTextMeasurement

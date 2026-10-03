@@ -22,15 +22,13 @@ export function useCreateOrder() {
 
       // 2. Insert measurements
       if (payload.measurements.length) {
-        const { error: mErr } = await supabase
-          .from("measurements")
-          .insert(
-            payload.measurements.map((m) => ({
-              ...m,
-              notes: m.notes ?? "",
-              order_id: data.id,
-            })),
-          );
+        const { error: mErr } = await supabase.from("measurements").insert(
+          payload.measurements.map((m) => ({
+            ...m,
+            notes: m.notes ?? "",
+            order_id: data.id,
+          })),
+        );
         if (mErr) throw new Error(mErr.message);
       }
 
@@ -90,6 +88,7 @@ export function useDeleteOrder() {
 
 export interface UpdateOrderMeasurementsPayload {
   orderId: string;
+  order: Pick<Order, "quantity" | "sadary_count" | "delivery_date" | "notes">;
   measurements: Omit<Measurement, "id" | "order_id" | "created_at">[];
   options: Omit<OrderOption, "id" | "order_id" | "created_at">[];
 }
@@ -98,6 +97,12 @@ export function useUpdateOrderMeasurements() {
   const client = useQueryClient();
   return useMutation({
     mutationFn: async (payload: UpdateOrderMeasurementsPayload) => {
+      const { error: orderErr } = await supabase
+        .from("orders")
+        .update({ ...payload.order, updated_at: new Date().toISOString() })
+        .eq("id", payload.orderId);
+      if (orderErr) throw new Error(orderErr.message);
+
       // 1. Delete old measurements & options
       const { error: delMErr } = await supabase
         .from("measurements")
@@ -113,15 +118,13 @@ export function useUpdateOrderMeasurements() {
 
       // 2. Insert new measurements
       if (payload.measurements.length) {
-        const { error: mErr } = await supabase
-          .from("measurements")
-          .insert(
-            payload.measurements.map((m) => ({
-              ...m,
-              notes: m.notes ?? "",
-              order_id: payload.orderId,
-            })),
-          );
+        const { error: mErr } = await supabase.from("measurements").insert(
+          payload.measurements.map((m) => ({
+            ...m,
+            notes: m.notes ?? "",
+            order_id: payload.orderId,
+          })),
+        );
         if (mErr) throw new Error(mErr.message);
       }
 

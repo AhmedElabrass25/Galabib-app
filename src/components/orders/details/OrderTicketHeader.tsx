@@ -42,9 +42,9 @@ export default function OrderTicketHeader({
             </Link>
             <span
               dir="ltr"
-              className="flex items-center gap-1 font-mono text-text-primary"
+              className="flex items-center gap-1 text-lg font-mono text-text-primary"
             >
-              <Phone className="size-4 text-text-muted print:hidden" />
+              <Phone className="size-4 text-lg text-text-muted print:hidden" />
               {order.customer.phone}
             </span>
           </div>

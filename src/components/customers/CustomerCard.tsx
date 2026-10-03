@@ -30,10 +30,10 @@ export default function CustomerCard({
               <User className="size-6" />
             </div>
             <div>
-              <h3 className="text-lg font-black leading-snug text-slate-900">
+              <h3 className="text-xl font-black leading-snug text-slate-900">
                 {customer.name}
               </h3>
-              <span className="text-xs font-semibold text-slate-500 num-tabular">
+              <span className="text-lg font-semibold text-slate-500 num-tabular">
                 تاريخ التسجيل: {formatDate(customer.created_at)}
               </span>
             </div>
@@ -57,12 +57,12 @@ export default function CustomerCard({
         </header>
 
         <div className="mb-3 flex items-center justify-between gap-2 rounded-xl border border-slate-200/80 bg-slate-50 px-3.5 py-2.5 text-sm font-bold text-slate-700">
-          <span className="flex items-center gap-2 text-xs font-semibold text-slate-500">
+          <span className="flex items-center gap-2 text-lg font-semibold text-slate-500">
             <Phone className="size-4 text-sky-600" /> الهاتف:
           </span>
           <span
             dir="ltr"
-            className="font-mono text-base font-extrabold text-slate-900 num-tabular"
+            className="font-mono text-xl font-extrabold text-slate-900 num-tabular"
           >
             {customer.phone}
           </span>

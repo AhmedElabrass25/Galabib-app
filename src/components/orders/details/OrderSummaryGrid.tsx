@@ -17,11 +17,11 @@ export default function OrderSummaryGrid({ order }: { order: Order }) {
     <div className="grid grid-cols-2 gap-4 rounded-xl border border-gray-100 bg-gray-50 p-4 sm:grid-cols-4">
       {items.map((item) => (
         <div key={item.label}>
-          <span className="block text-xs font-bold text-text-secondary">
+          <span className="block text-lg font-bold text-text-secondary">
             {item.label}
           </span>
           <span
-            className={`mt-1 flex items-center gap-1 text-sm font-extrabold ${item.calendar ? "text-primary" : "text-text-primary"}`}
+            className={`mt-1 flex items-center gap-1 text-lg font-extrabold ${item.calendar ? "text-primary" : "text-text-primary"}`}
           >
             {item.calendar && <Calendar className="size-4 print:hidden" />}
             {item.value}

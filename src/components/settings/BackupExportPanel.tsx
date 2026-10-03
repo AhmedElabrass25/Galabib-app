@@ -68,8 +68,8 @@ export default function BackupExportPanel() {
             تصدير نسخة احتياطية
           </h2>
           <p className="mt-1 text-sm leading-relaxed text-text-secondary">
-            Excel بأوراق للعملاء والطلبات والمقاسات، أو PDF منسق ببطاقة مستقلة
-            لكل عميل.
+            Excel بأوراق للعملاء والطلبات والمقاسات، أو PDF منسق بصفحة واحدة لكل
+            عميل تشمل طلباته ومقاساته.
           </p>
         </div>
       </div>

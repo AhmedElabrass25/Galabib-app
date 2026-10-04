@@ -43,7 +43,7 @@ export const BALADY_CONFIG: GarmentTypeConfig = {
     {
       name: "pocket",
       label: "الخزنة",
-      unit: "text",
+      unit: "cm_and_inch_independent",
       required: false,
     },
     {
